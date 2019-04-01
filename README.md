@@ -55,5 +55,3 @@ I will do my best to accommodate different skill levels, however I will assume a
 For book people (like me!) I recommend the "R Nuts and Bolts" chapter of  Roger Peng's [R Programming for Data Science](https://leanpub.com/rprogramming). If you are limited in time, the most important topics to learn / review are: character vs. factor data, and working with data frames. Again, matrices and lists won't come up.
 
 If you're new to ggplot2, please read ["Data Visualization"](https://r4ds.had.co.nz/data-visualisation.html) in R for Data Science by Garrett Grolemund and Hadley Wickham to gain a general familiarity with ggplot2 functions.
-
-If you're so inclined, please complete this short survey by noon on Monday April 1 -- or noon on Monday April 8 if you're registered only for the second workshop. Your responses will help me get a sense of your skill levels and interests.
