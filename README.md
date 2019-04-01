@@ -1,20 +1,38 @@
 # BRL-workshops
+
 Materials for BRL workshops
 
-### Session 1
+### Workshop 1: Visual Techniques for Exploratory Data Analysis in R (with ggplot2)
 
-When: Tuesday, April 2, 2019
-Where: Warren 309
-Agenda:
+When: Tuesday, April 2, 2019, 5:30 - 8:00pm
 
+Where: Warren 309  
 
-### Session 2
+* Introduction to the grammar of graphics
 
-When: Tuesday, April 2, 2019
-Where: Warren 309
-Agenda:
+* Single and multi-dimensional continuous data
 
-### Files
+* Single and multi-dimensional categorical data
+
+* Combining continuous and categorical data with faceting
+
+* Introduction to tidying data (to be continued in second workshop)
+
+### Workshop 2: Data Transformation Techniques in R (with dplyr and tidyr)
+
+When: Tuesday, April 11, 2019, 5:30 - 8:00pm
+
+Where: Warren 415
+
+* Introduction to the tidyverse philosophy, comparison to base R
+
+* The "main five" dplyr verbs: filter, select, arrange, group_by, summarize
+
+* Piping in R
+
+* Tidying data with tidyr
+
+* Merging datasets with join functions
 
 
 ### Pre-Workshop Assignment
