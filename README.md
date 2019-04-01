@@ -46,7 +46,9 @@ Before your first workshop, please do the following:
 
 3. Install [tidyverse](https://www.tidyverse.org/) packages with:
 
+```
 > install.packages("tidyverse")
+```
 
 I will do my best to accommodate different skill levels, however I will assume a general familiarity of base R. If you haven't used R at all previously, I recommend [DataCamp's free Introduction to R course](https://www.datacamp.com/courses/free-introduction-to-r). For our purposes, you can skip the matrices and lists chapters, and the ordered factors section of the factors chapter. 
 
