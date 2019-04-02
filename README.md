@@ -8,9 +8,11 @@ When: Tuesday, April 2, 2019, 5:30 - 8:00pm
 
 Where: Warren 309  
 
-* Introduction to the grammar of graphics [Why R?](slides/1-WhyR.pdf)
+* Introduction to the grammar of graphics [Why R?](slides/1-WhyR.pdf) [Grammar of Graphics](slides/2-GrammarofGraphics.pdf)
 
 * Single and multi-dimensional continuous data
+
+[Histograms](slides/3-Histograms.pdf)  [lab](labs/1-Histogram.Rmd) [solutions](solutions/1-Histogram-Solutions.md)
 
 * Single and multi-dimensional categorical data
 
