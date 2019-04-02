@@ -8,7 +8,7 @@ When: Tuesday, April 2, 2019, 5:30 - 8:00pm
 
 Where: Warren 309  
 
-* Introduction to the grammar of graphics
+* Introduction to the grammar of graphics [Why R?](slides/1-WhyR.pdf)
 
 * Single and multi-dimensional continuous data
 
