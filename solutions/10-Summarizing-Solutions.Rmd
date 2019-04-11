@@ -1,0 +1,51 @@
+---
+title: "Summarizing data"
+author: 
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+
+## Exercise
+
+Read in `NYCdogs.csv`
+
+```{r}
+library(tidyverse)
+dogs <- read_csv("../data/NYCdogs.csv", na = "n/a")
+```
+
+1. Write the code to produce this output:
+
+```{r}
+dogs %>% 
+  group_by(borough, spayed_or_neutered) %>% 
+  summarize(count = n())
+```
+
+
+2. Write the code to produce this output:
+
+```{r}
+dogs %>% 
+  group_by(borough, spayed_or_neutered) %>% 
+  summarize(count = n()) %>% 
+  mutate(percent = count/sum(count))
+```
+
+
+3. Write the code to produce this output:
+
+```{r}
+dogs %>% 
+  group_by(borough, spayed_or_neutered) %>% 
+  summarize(count = n()) %>% 
+  mutate(percent = count/sum(count)) %>% 
+  filter(spayed_or_neutered == "Yes") %>% 
+  select(borough, percent_spayed = percent)
+```

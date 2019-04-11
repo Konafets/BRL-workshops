@@ -1,0 +1,97 @@
+---
+title: "Tidying data"
+author: Joyce Robbins
+output: 
+  md_document:
+    toc: true
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+## Functions
+
+`gather()`
+`spread()`
+
+Online tutorial: https://github.com/jtr13/codehelp/blob/master/R/gather.md
+
+## Messy vs. tidy
+
+```{r}
+library(tidyverse)
+messydata <- tibble(id = c("car1", "car2", "car3"),
+                    city = c(19, 20, 29),
+                    hwy = c(24, 30, 35))
+messydata
+```
+
+
+```{r}
+tidydata <- messydata %>% 
+  gather(key = "roadtype",
+         value = "mpg", 
+         -id)
+tidydata
+```
+
+
+## Heads up
+
+There are a few problems I've seen with the way in which people use `gather()`:
+
+### Gathering the `id` column
+
+```{r}
+messydata %>% 
+  gather(key = "roadtype",
+         value = "mpg")
+```
+
+### Missing *id* column
+
+
+```{r}
+messy2 <- messydata %>% select("city", "hwy")
+messy2
+
+messy2 %>% 
+  gather(key = "roadtype", 
+         value = "mpg")
+```
+
+How to fix: add an `id` column:
+
+
+```{r}
+messy2 %>% rownames_to_column("id") %>% 
+  gather(key, value, -id)
+```
+
+### Leaving out `key` and `value`
+
+
+```{r, echo = TRUE, error = TRUE}
+messydata %>% 
+  gather(-id)
+```
+
+
+```{r, echo = TRUE}
+messydata %>% 
+  gather(key, value, -id)
+```
+
+## Exercise
+
+Tidy the `painters` dataset. It is available in the **MASS** package as well as in the `data` folder.
+
+```{r}
+library(MASS)
+head(painters)
+```
+

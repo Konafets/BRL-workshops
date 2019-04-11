@@ -1,0 +1,24 @@
+---
+title: "Tidying data"
+author: 
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+
+## Exercise
+
+
+```{r}
+library(MASS)
+library(tidyverse)
+tidypaint <- painters %>% 
+  rownames_to_column("Name") %>% 
+  gather(key = "Skill", value = "Score", -Name, -School)
+```
+

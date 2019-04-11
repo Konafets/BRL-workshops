@@ -1,0 +1,153 @@
+---
+title: "Transforming data"
+author: 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+Read the data:
+
+```{r}
+library(tidyverse)
+df <- read_csv("../data/countries2012.csv")
+set.seed(12)
+random5 <- df %>% 
+  sample_n(5)
+```
+
+
+## Tranforming column data
+
+### `rename()` columns
+
+
+
+```{r}
+random5 %>% 
+  rename(child_mort = CHMORT)
+```
+
+or rename within a call to `select()`:
+
+```{r}
+random5 %>% 
+  select(country = COUNTRY,
+         child_mort = CHMORT,
+         fertility = TFR)
+```
+
+(Note: in the above example, we did three things: select, rename, and reorder columns.)
+
+### `mutate()` to alter data within a column
+
+In these examples, the same transformation is applied to all rows:
+
+```{r}
+random5 %>% 
+  mutate(TFR = round(TFR, 1))
+```
+
+```{r}
+random5 %>% 
+  mutate(CONTINENT = str_sub(CONTINENT, 1, 3))
+```
+
+```{r}
+random5 %>% 
+  mutate(CONTINENT = factor(CONTINENT))
+```
+
+### `mutate()` to create a new column
+
+Yes... the same function. If the column name doesn't exist, a new one will be created.
+
+```{r}
+random5 %>% 
+  mutate(TFRROUND = round(TFR))
+```
+
+### `mutate()` to convert continuous to categorical data
+
+`if_else()` format: test, if yes, if no
+
+```{r}
+df2 <- df %>% 
+  mutate(gdp_group = if_else(GDP > mean(GDP), "above average GDP", "below average GDP"))
+
+df2 %>% 
+  ggplot(aes(TFR, LIFEEXP)) + 
+  geom_point() + 
+  facet_wrap(~gdp_group)
+```
+
+```{r}
+df2 %>% 
+  ggplot(aes(TFR, LIFEEXP, color = gdp_group)) + 
+  geom_point() 
+```
+
+Digression: What is the outlier?
+
+```{r}
+df %>% 
+  filter(GDP > mean(GDP), TFR > 4)
+```
+
+```{r}
+df %>% mutate(tfr_group = 
+  case_when(
+    TFR < 2 ~ "low",
+    TFR < 4 ~ "average",
+    TFR < 10 ~ "high"
+  )
+)
+```
+
+Following the help instructions to start with the most specific:
+
+```{r}
+df %>% mutate(tfr_group = 
+  case_when(
+    TFR < 2 ~ "low",
+    TFR < 4 ~ "average",
+    TRUE ~ "high"            # anything else
+  )
+)
+```
+
+Clearer, safer code, imho:
+
+```{r}
+df %>% mutate(tfr_group = 
+  case_when(
+    TFR > 0 & TFR < 2 ~ "low",
+    TFR >= 2 & TFR < 4 ~ "average",
+    TFR >= 4 ~ "high" 
+  )
+)
+```
+
+Or create a function:
+
+```{r}
+tfr_level <- function(x) {
+    case_when(
+    x > 0 & x < 2 ~ "low",
+    x >= 2 & x < 4 ~ "average",
+    x >= 4 ~ "high" 
+  )
+}
+
+df %>% 
+  mutate(tfr_group = tfr_level(TFR)) %>% 
+  mutate(tfr_group = fct_relevel(tfr_group, "low")) %>% 
+  ggplot(aes(CHMORT, LIFEEXP, color = tfr_group)) +
+  geom_point()
+```
+
+

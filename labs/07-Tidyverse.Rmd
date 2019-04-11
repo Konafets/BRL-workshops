@@ -1,0 +1,253 @@
+---
+title: "Tidyverse"
+output: html_document
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+options(digits = 3, scipen = 999)
+opts_chunk$set(fig.align='center',
+               echo = TRUE, message = FALSE,
+               warning = FALSE,
+               eval = TRUE, error = TRUE)
+```
+
+## Setup
+
+Install and load tidyverse packages
+
+```{r}
+# install.packages("tidyverse") # uncomment if you haven't done this yet
+library(tidyverse)
+```
+
+Set the working directory to `labs` by clicking on the Files pane to the right, navigating to the `labs` folder, and then clicking "More..." "Set As Working Directory".
+
+
+# What is the "tidyverse"?
+
+> - "an opinionated collection of R packages designed for data science. All packages share an underlying philosophy and common APIs."
+
+> - formerly referred to as the "hadleyverse" for Hadley Wickham
+
+> - packages are strongly associated with RStudio, but not exclusively 
+
+# Core tidyverse packages
+
+- ggplot2
+- dplyr 
+- tidyr
+- readr
+- purrr
+- tibble
+- stringr
+- forcats
+
+# 10 differences between the tidyverse and base R
+
+
+```{r, message = FALSE, echo = FALSE, fig.height = 4}
+library(tidyverse)
+tidyswiss <- swiss %>% rownames_to_column("Province") %>%
+  gather(key, value, -Province)
+ggplot(tidyswiss, aes(x = key, y = value)) + geom_boxplot() +
+  coord_flip()
+```
+
+
+```{r, fig.height = 5, echo = FALSE}
+oldpar <- par(mar = c(4, 6, 2, 2))
+boxplot(swiss,
+        horizontal = TRUE,
+        cex.axis = .8,
+        las = 1)
+par(oldpar)
+```
+
+
+# 1. Base R
+
+Base: 
+```{r, eval = FALSE}
+barplot(1:5, horiz = TRUE)
+boxplot(1:5, horizontal = TRUE)
+```
+
+# 1. Tidyverse is ...  more consistent 
+
+Tidyverse:
+```{r, eval = FALSE}
+ggplot(...) + geom_bar() + coord_flip()
+ggplot(...) + geom_boxplot() + coord_flip()
+```
+
+
+# 2. Base R
+
+Base:
+```{r}
+df <- data.frame(x = 1:4, y = 1:2)
+df
+```
+
+# 2. Tidyverse  ...  fails faster
+
+Tidyverse:
+```{r}
+library(tibble)
+df <- tibble(x = 1:4, y = 1:2)
+```
+
+
+# 3. Base R
+
+Base:
+```{r}
+df <- read.csv("../data/animals.csv")
+df
+str(df)
+```
+
+# 3. Tidyverse ... avoids factors
+
+Tidyverse:
+```{r}
+tib <- read_csv("../data/animals.csv")
+str(tib)
+```
+
+
+
+# 4. Base R
+
+Base:
+
+
+```{r}
+x <- cbind(df[,1], df[,2]) 
+class(x)
+```
+
+```{r}
+x
+```
+
+# 4. Tidyverse ... is more predictable
+
+Tidyverse:
+
+
+```{r}
+x <- bind_cols(tib[,1], tib[,2]) 
+class(x)
+```
+
+```{r}
+x
+```
+
+
+# 4. Base R
+
+Base:
+
+```{r}
+class(df)
+class(df[,1])
+```
+
+# 4. Tidyverse is ... more predictable
+
+Tidyverse:
+
+```{r subsettingtv}
+class(tib)
+class(tib[,1])
+```
+
+
+# 5. Base R 
+
+Base:
+```{r}
+# p. 115, Modern Applied Statistics with S-Plus (1999)
+x <- rt(250, 9)
+qqnorm(x); qqline(x)
+```
+
+Source: Venables and Ripley, *Modern Applied Statistics with S-Plus* (1999), p. 115.
+
+(btw 1999 is "new"...)
+
+# 5. Tidyverse is ...  still evolving
+
+Tidyverse:
+```{r, warning=TRUE, message = TRUE}
+df <- iris %>% dplyr::add_rownames()
+```
+
+
+
+# 6. Base R
+
+Base:
+
+```{r}
+df <- data.frame(x = rnorm(100))
+hist(df$x)
+```
+
+
+# 7. Base R
+
+Base:
+
+```{r}
+x <- rnorm(100)
+hist(x)
+```
+
+# 7. Tidyverse ... avoids vectors
+
+Tidyverse:
+
+```{r}
+library(ggplot2)
+ggplot(x, aes(x)) + geom_histogram()
+```
+
+```{r}
+ggplot(data.frame(x), aes(x)) + geom_histogram()
+```
+
+
+
+# 8. Tidyverse is ... more talkative
+
+Tidyverse:
+```{r, message = TRUE}
+library(ggplot2)
+ggplot(df, aes(x)) + geom_histogram()
+```
+
+https://twitter.com/hadleywickham/status/952259891342794752
+
+
+
+# 8. Tidyverse is .. more coordinated across tasks
+
+Source: RStudio, https://github.com/rstudio/meetup_roadshow/blob/master/2017%20Meetup%20Roadshow.pptx
+
+
+# 9. Tidyverse is ... easier for beginners
+
+Source: "How `dplyr` replaced my most common R idioms"
+
+http://www.onthelambda.com/2014/02/10/how-dplyr-replaced-my-most-common-r-idioms/
+
+(highly recommended!)
+
+# 10. Tidyverse ... is more collaborative
+
+https://twitter.com/jtrnyc/status/954148122724392960
+
+Source:  https://www.stickermule.com/user/1070448958/stickers

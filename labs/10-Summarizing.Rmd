@@ -1,0 +1,180 @@
+---
+title: "Summarizing data"
+author: 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+## Functions
+
+`group_by()`
+`summarize()`
+`pull()`
+
+
+## Whole columns
+
+(not using `dplyr`)
+
+Read the data (source: `GDAdata` package):
+
+```{r}
+library(tidyverse)
+ski <- read.csv("../data/SpeedSki.csv")
+head(ski)
+summary(ski)
+```
+
+
+From `skimr` package:
+
+```{r}
+#install.packages("skimr")
+library(skimr)
+skim(ski)
+```
+
+
+## `group_by()` + `summarize()` to summarize by factor level
+
+### One group
+
+```{r}
+ski %>% 
+  group_by(Nation) %>% 
+  summarize(MeanSpeed = mean(Speed)) %>% 
+  arrange(desc(MeanSpeed))
+```
+
+### Multiple groups
+
+```{r}
+ski %>% 
+  group_by(Nation, Event) %>% 
+  summarize(MeanSpeed = mean(Speed)) %>% 
+  arrange(desc(MeanSpeed))
+```
+
+### Subset by results of `group_by() / summarize()`
+
+```{r}
+# find nations with the highest numbers of skiers
+top5nations <- ski %>% 
+  group_by(Nation) %>%   # group by Nation
+  summarize(count = n()) %>% # count the skiers
+  arrange(desc(count)) %>%  # reorder the rows
+  slice(1:5) %>%  # take the top five
+  pull(Nation) # convert to a vector
+top5nations
+```
+
+```{r}
+top5ski <- ski %>% 
+  filter(Nation %in% top5nations)
+```
+
+### Multiple groups, multiple summary statistics
+
+```{r}
+top5ski %>% 
+  group_by(Nation, Event, Sex) %>% 
+  summarize(MeanSpeed = mean(Speed), Count = n())
+```
+
+### Add missing combinations
+
+```{r}
+top5ski %>% 
+  group_by(Nation, Event, Sex) %>% 
+  summarize(MeanSpeed = mean(Speed), Count = n()) %>% 
+  ungroup() %>% 
+  complete(Nation, Event)
+
+```
+
+### Treating integers as factors
+
+```{r}
+top5ski <- top5ski %>% 
+  rename(Runs = no.of.runs)
+  
+top5ski %>%   
+  group_by(Event, Runs) %>% 
+  summarize(Count = n())
+```
+
+
+```{r}
+top5ski %>%   
+  group_by(Event, Runs) %>% 
+  summarize(Count = n()) %>% 
+  ggplot(aes(Runs, Count)) +
+  geom_col() +
+  facet_wrap(~Event)
+```
+
+## Exercise
+
+Read in `NYCdogs.csv`
+
+```{r}
+dogs <- read_csv("../data/NYCdogs.csv", na = "n/a")
+```
+
+1. Write the code to produce this output:
+
+```
+# A tibble: 10 x 3
+# Groups:   borough [5]
+   borough       spayed_or_neutered count
+   <chr>         <chr>              <int>
+ 1 Bronx         No                  3536
+ 2 Bronx         Yes                 5757
+ 3 Brooklyn      No                  5085
+ 4 Brooklyn      Yes                14248
+ 5 Manhattan     No                  3866
+ 6 Manhattan     Yes                22163
+ 7 Queens        No                  4098
+ 8 Queens        Yes                13408
+ 9 Staten Island No                  1455
+10 Staten Island Yes                 7926
+```
+
+2. Write the code to produce this output:
+
+```
+# A tibble: 10 x 4
+# Groups:   borough [5]
+   borough       spayed_or_neutered count percent
+   <chr>         <chr>              <int>   <dbl>
+ 1 Bronx         No                  3536   0.381
+ 2 Bronx         Yes                 5757   0.619
+ 3 Brooklyn      No                  5085   0.263
+ 4 Brooklyn      Yes                14248   0.737
+ 5 Manhattan     No                  3866   0.149
+ 6 Manhattan     Yes                22163   0.851
+ 7 Queens        No                  4098   0.234
+ 8 Queens        Yes                13408   0.766
+ 9 Staten Island No                  1455   0.155
+10 Staten Island Yes                 7926   0.845
+```
+
+3. Write the code to produce this output:
+
+```
+# A tibble: 5 x 2  
+# Groups:   borough [5]  
+  borough       percent_spayed  
+  <chr>                  <dbl>  
+1 Bronx                  0.619  
+2 Brooklyn               0.737  
+3 Manhattan              0.851  
+4 Queens                 0.766  
+5 Staten Island          0.845  
+```
+
