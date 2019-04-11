@@ -50,8 +50,6 @@ Before your first workshop, please do the following:
 > install.packages("tidyverse")
 ```
 
-I will do my best to accommodate different skill levels, however I will assume a general familiarity of base R. If you haven't used R at all previously, I recommend [DataCamp's free Introduction to R course](https://www.datacamp.com/courses/free-introduction-to-r). For our purposes, you can skip the matrices and lists chapters, and the ordered factors section of the factors chapter. 
-
-For book people (like me!) I recommend the "R Nuts and Bolts" chapter of  Roger Peng's [R Programming for Data Science](https://leanpub.com/rprogramming). If you are limited in time, the most important topics to learn / review are: character vs. factor data, and working with data frames. Again, matrices and lists won't come up.
+I will do my best to accommodate different skill levels, however I will assume a general familiarity of base R. If you haven't used R at all previously, I recommend the "R Nuts and Bolts" chapter of  Roger Peng's [R Programming for Data Science](https://leanpub.com/rprogramming). If you are limited in time, the most important topics to learn / review are: character vs. factor data, and working with data frames. Again, matrices and lists won't come up.
 
 If you're new to ggplot2, please read ["Data Visualization"](https://r4ds.had.co.nz/data-visualisation.html) in R for Data Science by Garrett Grolemund and Hadley Wickham to gain a general familiarity with ggplot2 functions.
