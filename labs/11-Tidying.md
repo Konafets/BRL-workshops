@@ -168,7 +168,7 @@ Likert data: 25 people and their responses to Q1-Q10
     ##  3 Leah         5     5     3     2     5     5     4     2     5     5
     ##  4 Adam         4     3     2     4     3     3     2     3     4     3
     ##  5 Joe          4     4     4     5     3     3     4     5     3     4
-    ##  6 Richard      4     2     5     3     3     3     3     4     3     3
+    ##  6 Ryan         4     2     5     3     3     3     3     4     3     3
     ##  7 Jasmine      4     3     3     2     4     4     4     2     3     3
     ##  8 Austin       3     2     4     3     2     4     3     2     2     3
     ##  9 Victor       4     4     2     2     4     3     4     3     3     3
@@ -185,8 +185,8 @@ Number of 1, 2, 3, 4, 5s per person
       mutate(Response = paste0("Count", Response)) %>% # so column names aren't numbers
       spread(key = "Response", value = "Count")
 
-    ## # A tibble: 23 x 6
-    ## # Groups:   Name [23]
+    ## # A tibble: 25 x 6
+    ## # Groups:   Name [25]
     ##    Name       Count1 Count2 Count3 Count4 Count5
     ##    <chr>       <int>  <int>  <int>  <int>  <int>
     ##  1 Adam           NA      2      5      3     NA
@@ -199,4 +199,4 @@ Number of 1, 2, 3, 4, 5s per person
     ##  8 Ella           NA     NA      2      5      3
     ##  9 Faith          NA      2      1      6      1
     ## 10 James          NA      1      1     NA      8
-    ## # … with 13 more rows
+    ## # … with 15 more rows
