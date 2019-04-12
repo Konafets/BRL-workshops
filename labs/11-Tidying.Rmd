@@ -95,3 +95,24 @@ library(MASS)
 head(painters)
 ```
 
+## `gather() + spread()`
+
+Likert data: 25 people and their responses to Q1-Q10
+
+```{r}
+df <- read_csv("../data/likert.csv")
+df
+```
+
+# Number of 1, 2, 3, 4, 5s per person
+
+```{r}
+df %>%
+  gather(key = "Question", value = "Response", -Name) %>% 
+  group_by(Name, Response) %>% 
+  summarize(Count = n()) %>% 
+  mutate(Response = paste0("Count", Response)) %>% # so column names aren't numbers
+  spread(key = "Response", value = "Count")
+```
+
+
